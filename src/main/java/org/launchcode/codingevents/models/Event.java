@@ -1,8 +1,6 @@
 package org.launchcode.codingevents.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 /**
@@ -24,11 +22,26 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotBlank(message ="Location is required!")
+    @Size(min = 3, max= 50, message = "Location must be between 3 and 50 characters")
+    private String eventLocation;
+
+    @NotNull(message="Registration is required!")
+    @AssertTrue(message="Attendees must be able to register.")
+    private Boolean isRegistered;
+
+    @NotNull(message = "Number of attendees is required")
+    @Min(1)
+    private int numOfAttendees;
+
+    public Event(String name, String description, String contactEmail, String eventLocation, Boolean isRegistered, int numOfAttendees) {
         this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.eventLocation = eventLocation;
+        this.isRegistered = isRegistered;
+        this.numOfAttendees = numOfAttendees;
     }
 
     public Event() {
@@ -58,6 +71,30 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getEventLocation() {
+        return eventLocation;
+    }
+
+    public void setEventLocation(String eventLocation) {
+        this.eventLocation = eventLocation;
+    }
+
+    public Boolean getIsRegistered() {
+        return isRegistered;
+    }
+
+    public void setIsRegistered(Boolean isRegistered) {
+        this.isRegistered = isRegistered;
+    }
+
+    public int getNumOfAttendees() {
+        return numOfAttendees;
+    }
+
+    public void setNumOfAttendees(int numOfAttendees) {
+        this.numOfAttendees = numOfAttendees;
     }
 
     public int getId() {
